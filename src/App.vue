@@ -1,19 +1,29 @@
 <template>
-  <div id="app">
-    <Test />
-  </div>
+  <v-app>
+    <city-input></city-input>
+    <v-divider></v-divider>
+    <v-main>
+      <weather-card>
+
+      </weather-card>
+    </v-main>
+    <v-divider></v-divider>
+    <Footer />
+  </v-app>
 </template>
 
 <script>
-import Test from '@/components/Test.vue'
+import CityInput from '@/components/CityInput.vue'
+import WeatherCard from '@/components/WeatherCard.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'App',
+
   components: {
-    Test
-  }
+    CityInput,
+    WeatherCard,
+    Footer
+  },
 }
 </script>
-
-<style>
-</style>
