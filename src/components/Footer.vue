@@ -16,7 +16,8 @@
             <v-card-text
               class="blue--text"
             >
-              {{ new Date().getFullYear() }} - <strong>Copyrighted by <a href="https://github.com/monidan" target="_blank">Daniel Horokhov</a> ©</strong> 
+              {{ new Date().getFullYear() }} - 
+              <strong>Copyrighted by <a href="https://github.com/monidan" target="_blank"> Daniel Horokhov </a>©</strong> 
             </v-card-text>
           </v-card>
         </v-row>

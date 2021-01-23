@@ -20,7 +20,9 @@
             prepend-inner-icon='mdi-city'
             color='blue lighten-1'
             autocomplete='off'
+            hint="Examples: Moscow, Kyiv, Odessa..."
             v-model="city"
+            @keydown.enter='forecastWeather'
           >
           </v-text-field>
           <v-btn

@@ -19,18 +19,48 @@ const store = new Vuex.Store({
       api.getWeatherData(city)
         .then(response => {
           state.weatherData = response.data
-          console.log(state.weatherData)
           state.isError = false
         })
         .catch(err => {
           console.log(err)
           state.isError = true
         })
-    }
+    },
   },
   getters: {
     getCity(state){
       return state.weatherData.name
+    },
+    getWeather(state){
+      return state.weatherData.weather
+    },
+    getMainForecast(state){
+      return state.weatherData.main
+    },
+    getVisibility(state){
+      return state.weatherData.visibility
+    },
+    getWind(state){
+      return state.weatherData.wind
+    },
+    getSunriseAndSunset(state){
+      if(!state.weatherData.sys?.sunrise || !state.weatherData.sys?.sunset){
+        return 'No info'
+      }
+
+      // TODO: make it simpler
+      let sunriseDate = new Date( state.weatherData.sys.sunrise * 1000),
+            sunsetDate = new Date( state.weatherData.sys.sunset * 1000)
+
+      let sunriseTime = sunriseDate.getHours() + ':' + sunriseDate.getMinutes(),
+          sunsetTime = sunsetDate.getHours() + ':' + sunsetDate.getMinutes();
+      return {
+        sunrise: sunriseTime,
+        sunset: sunsetTime
+      }
+    },
+    getWeatherIconId(state){
+      return state.weatherData.weather?.icon
     }
   },
 })
