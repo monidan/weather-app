@@ -38,36 +38,45 @@
                   <div class="weatehr-card__bottom__inner">
                     <div class="weather-card__bottom__inner_temperature">
                       Temperature
-                      {{formatTemperature}}
                       <p>
-                        °C
+                        {{formatTemperature}}°C
                       </p>
                     </div>
                     <div class="weather-card__bottom__inner_wind">
                       Wind Speed
-                      {{formatWind}}
                       <p>
-                        km/hour
+                        {{formatWind}} km/hour
                       </p>
                     </div>
                     <div class="weather-card__bottom__inner_sunrise">
                       Sunrise
-                      {{getSunriseAndSunset.sunrise}}
+                      <p>
+                        {{getSunriseAndSunset.sunrise}}
+                      </p>
                     </div>
                     <div class="weather-card__bottom__inner_sunset">
                       Sunset
-                      {{getSunriseAndSunset.sunset}}
+                      <p>
+                        {{getSunriseAndSunset.sunset}}  
+                      </p>
                     </div>
                     <div class="weather-card__bottom__inner_extensions">
                       <div class="weather-card__bottom__inner_humidity">
-                        {{formatHumidity}}%
+                        Humidity
+                        <p>
+                          {{formatHumidity}}%
+                        </p>
                       </div>
                       <div class="weather-card__bottom__inner_visibility">
-                        {{formatVisibility}} km/hour
+                        Visibility
+                        <p>
+                          {{formatVisibility}} km/hour
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
+                <HalfCircleSpinner />
               </div>
               <div class="weather-card__inner_forecast_failure text-h3"
                    v-else
@@ -85,10 +94,13 @@
 import {mapGetters} from 'vuex';
 import BaseImage from '@/components/BaseImage';
 
+import {HalfCircleSpinner} from 'epic-spinners';
+
 export default {
   name: 'WeatherCard',
   components: {
-    BaseImage
+    BaseImage,
+    HalfCircleSpinner
   },
   data() {
     return {
@@ -134,7 +146,7 @@ export default {
     },
     formatTime(){
       const date = this.getDate;
-      return date.getHours() + ':' + date.getMinutes() 
+      return date.getHours() + ':' + (Number(date.getMinutes()) > 10 ? date.getMinutes() : '0' + date.getMinutes())
     },
     formatTemperature(){
       return (+this.getMainForecast.temp - this.kelvinsConst).toFixed(0)
@@ -168,11 +180,22 @@ export default {
       text-align: center;
     }
 
+    &_profile__top{
+      display: flex;
+      padding-bottom: 10rem;
+
+      p{
+        margin: 0 
+      }
+    }
+
     &_profile__bottom{
       
+      padding: 1.5rem 0;
+
       & > div{
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
       }
     }
   }

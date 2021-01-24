@@ -61,8 +61,10 @@ const store = new Vuex.Store({
         let sunriseDate = new Date( state.weatherData.sys.sunrise * 1000),
         sunsetDate = new Date( state.weatherData.sys.sunset * 1000)
         
-        let sunriseTime = sunriseDate.getHours() + ':' + sunriseDate.getMinutes(),
-        sunsetTime = sunsetDate.getHours() + ':' + sunsetDate.getMinutes();
+        let sunriseTime = (Number(sunriseDate.getHours()) > 10 ? sunriseDate.getHours() : '0' + sunriseDate.getHours()) + 
+          ':' + (Number(sunriseDate.getMinutes()) > 10? sunriseDate.getMinutes() : '0' + sunriseDate.getMinutes()),
+        sunsetTime = (Number(sunsetDate.getHours()) > 10 ? sunsetDate.getHours() : '0' + sunsetDate.getHours()) + 
+        ':' + (Number(sunsetDate.getMinutes()) > 10? sunsetDate.getMinutes() : '0' + sunsetDate.getMinutes());
         return {
           sunrise: sunriseTime,
           sunset: sunsetTime
@@ -82,7 +84,7 @@ const store = new Vuex.Store({
       if(state.isDataProvided){
         return new Date(state.weatherData.dt * 1000);
       }
-    }
+    },
   },
 })
 
