@@ -34,31 +34,26 @@ const store = new Vuex.Store({
       if(state.isDataProvided){
         return state.weatherData.name
       }
-      return 'No info'
     },
     getWeather(state){
       if(state.isDataProvided){
         return state.weatherData.weather
       }
-      return 'No info'
     },
     getMainForecast(state){
       if(state.isDataProvided){
         return state.weatherData.main
       }
-      return 'No info'
     },
     getVisibility(state){
       if(state.isDataProvided){
         return state.weatherData.visibility
       }
-      return 'No info'
     },
     getWind(state){
       if(state.isDataProvided){
         return state.weatherData.wind
       }
-      return 'No info'
     },
     getSunriseAndSunset(state){
       if(state.isDataProvided){
@@ -73,7 +68,6 @@ const store = new Vuex.Store({
           sunset: sunsetTime
         }
       }
-      return 'No info'
     },
     getWeatherIconId(state){
       if(state.isDataProvided){
@@ -83,7 +77,11 @@ const store = new Vuex.Store({
           return state.weatherData.weather?.icon
         }
       }
-      return '02n'
+    },
+    getDate(state){
+      if(state.isDataProvided){
+        return new Date(state.weatherData.dt * 1000);
+      }
     }
   },
 })
