@@ -10,13 +10,25 @@
         <v-row>
           <div class="weather-card__inner rounded-lg blue lighten-1">
             <div class="weather-card__inner_icon">
-              <img :src="weatherIcon(getWeatherIconId)" alt="">
+              <base-image
+                :iconId='getWeatherIconId'
+                v-if='this.$store.state.isDataProvided'
+              ></base-image>
+              <p
+                v-else
+              >No city provided</p>
             </div>
             <div class="weather-card__inner_city">
               {{getCity}}
             </div>
             <div class="weather-card__inner_weather">
-              {{getWeather}}
+              <pre>
+                {{getWeather}}
+                {{getMainForecast}}
+                {{getVisibility}}
+                {{getWind}}
+                {{getSunriseAndSunset}}
+              </pre>
             </div>
           </div>
         </v-row>
@@ -25,18 +37,13 @@
   </div>
 </template>
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters} from 'vuex';
+import BaseImage from '@/components/BaseImage';
 
 export default {
   name: 'WeatherCard',
-  data(){
-    return {
-    }
-  },
-  methods: {
-     weatherIcon(iconId){
-       return `http://openweathermap.org/img/wn/${iconId}@2x.png`
-    },
+  components: {
+    BaseImage
   },
   computed: {
     city(){

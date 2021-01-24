@@ -9,7 +9,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     weatherData: {},
-    isError: false
+    isError: false,
+    isDataProvided: false
   },
   mutations: {
 
@@ -20,6 +21,7 @@ const store = new Vuex.Store({
         .then(response => {
           state.weatherData = response.data
           state.isError = false
+          state.isDataProvided = true;
         })
         .catch(err => {
           console.log(err)
@@ -29,38 +31,59 @@ const store = new Vuex.Store({
   },
   getters: {
     getCity(state){
-      return state.weatherData.name
+      if(state.isDataProvided){
+        return state.weatherData.name
+      }
+      return 'No info'
     },
     getWeather(state){
-      return state.weatherData.weather
+      if(state.isDataProvided){
+        return state.weatherData.weather
+      }
+      return 'No info'
     },
     getMainForecast(state){
-      return state.weatherData.main
+      if(state.isDataProvided){
+        return state.weatherData.main
+      }
+      return 'No info'
     },
     getVisibility(state){
-      return state.weatherData.visibility
+      if(state.isDataProvided){
+        return state.weatherData.visibility
+      }
+      return 'No info'
     },
     getWind(state){
-      return state.weatherData.wind
+      if(state.isDataProvided){
+        return state.weatherData.wind
+      }
+      return 'No info'
     },
     getSunriseAndSunset(state){
-      if(!state.weatherData.sys?.sunrise || !state.weatherData.sys?.sunset){
-        return 'No info'
+      if(state.isDataProvided){
+        // TODO: make it simpler
+        let sunriseDate = new Date( state.weatherData.sys.sunrise * 1000),
+        sunsetDate = new Date( state.weatherData.sys.sunset * 1000)
+        
+        let sunriseTime = sunriseDate.getHours() + ':' + sunriseDate.getMinutes(),
+        sunsetTime = sunsetDate.getHours() + ':' + sunsetDate.getMinutes();
+        return {
+          sunrise: sunriseTime,
+          sunset: sunsetTime
+        }
       }
-
-      // TODO: make it simpler
-      let sunriseDate = new Date( state.weatherData.sys.sunrise * 1000),
-            sunsetDate = new Date( state.weatherData.sys.sunset * 1000)
-
-      let sunriseTime = sunriseDate.getHours() + ':' + sunriseDate.getMinutes(),
-          sunsetTime = sunsetDate.getHours() + ':' + sunsetDate.getMinutes();
-      return {
-        sunrise: sunriseTime,
-        sunset: sunsetTime
-      }
+      return 'No info'
     },
     getWeatherIconId(state){
-      return state.weatherData.weather?.icon
+      if(state.isDataProvided){
+        if(Array.isArray(state.weatherData.weather)){
+          return state.weatherData.weather[0].icon
+        } else {
+          return state.weatherData.weather?.icon
+        }
+      }
+      return '02n'
     }
   },
 })
