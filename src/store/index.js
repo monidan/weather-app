@@ -10,14 +10,15 @@ const store = new Vuex.Store({
   state: {
     weatherData: {},
     isError: false,
-    isDataProvided: false
+    isDataProvided: false,
+    isLoading: true
   },
   mutations: {
 
   },
   actions: {
-    fetchWeatherData({state}, city){
-      api.getWeatherData(city)
+    async fetchWeatherData({state}, city){
+      await api.getWeatherData(city)
         .then(response => {
           state.weatherData = response.data
           state.isError = false
