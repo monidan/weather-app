@@ -11,7 +11,8 @@ const store = new Vuex.Store({
     weatherData: {},
     isError: false,
     isDataProvided: false,
-    isLoading: false
+    isLoading: false,
+    errorText: 'Error!'
   },
   mutations: {
 
@@ -24,9 +25,16 @@ const store = new Vuex.Store({
           state.isError = false
           state.isDataProvided = true;
         })
-        .catch(err => {
-          console.log(err)
+        .catch(() => {
           state.isError = true
+          state.errorText = 'Incorrect city input!'
+          
+          // reseting our error and loading flags
+          setTimeout(() => {
+            state.errorText = 'Error'
+            state.isError = false,
+            state.isLoading = false
+          }, 2000)
         })
     },
   },

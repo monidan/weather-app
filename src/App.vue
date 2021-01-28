@@ -2,6 +2,9 @@
   <v-app>
     <city-input></city-input>
     <v-divider></v-divider>
+    <base-modal>
+      {{$store.state.errorText}}
+    </base-modal>
     <v-main>
       <weather-card>
         <HalfCircleSpinner 
@@ -20,6 +23,7 @@ import WeatherCard from '@/components/WeatherCard.vue'
 import Footer from '@/components/Footer.vue'
 
 import {HalfCircleSpinner} from 'epic-spinners';
+import BaseModal from './components/BaseModal.vue'
 
 export default {
   name: 'App',
@@ -28,7 +32,8 @@ export default {
     CityInput,
     WeatherCard,
     Footer,
-    HalfCircleSpinner
+    HalfCircleSpinner,
+    BaseModal
   },
 
   beforeCreate(){
