@@ -14,7 +14,6 @@
             color='transparent'
           >
             <v-card-text
-              class="blue--text"
             >
               {{ new Date().getFullYear() }} - 
               <strong>Copyrighted by <a href="https://github.com/monidan" target="_blank"> Daniel Horokhov </a>©</strong> 

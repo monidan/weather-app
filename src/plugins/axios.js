@@ -15,9 +15,7 @@ _axios.interceptors.request.use(config => {
 })
 
 _axios.interceptors.response.use(response => {
-  setTimeout(() => {
-    store.state.isLoading = false
-  }, 300)
+  store.state.isLoading = false
   return response
 })
 

@@ -11,7 +11,7 @@ const store = new Vuex.Store({
     weatherData: {},
     isError: false,
     isDataProvided: false,
-    isLoading: true
+    isLoading: false
   },
   mutations: {
 

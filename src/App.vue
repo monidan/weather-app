@@ -30,5 +30,15 @@ export default {
     Footer,
     HalfCircleSpinner
   },
+
+  beforeCreate(){
+    const date = new Date();
+
+    if(date.getHours() <= 18 && date.getHours() >= 6){
+      this.$vuetify.theme.dark = false
+    } else {
+      this.$vuetify.theme.dark = true
+    }
+  }
 }
 </script>

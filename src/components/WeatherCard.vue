@@ -8,7 +8,8 @@
         class="weather-card__column"
       >
         <v-row>
-          <div class="weather-card__inner rounded-lg blue lighten-1">
+          <div class="weather-card__inner rounded-lg blue lighten-1"
+               :class="{'weather-card__night': $vuetify.theme.dark}">
             <div class="weather-card__inner_forecast_success">
               <transition name="weather-card__animation">
                 <div class="weather-card__inner_profile"
@@ -37,17 +38,17 @@
                       color='white'
                     ></v-divider>
                     <div class="weather-card__inner_profile__bottom">
-                      <div class="weatehr-card__bottom__inner">
+                      <div class="weather-card__bottom__inner">
                         <div class="weather-card__bottom__inner_temperature">
                           Temperature
                           <p>
-                            {{formatTemperature}}°C
+                            {{formatTemperature}}<span>°C</span>
                           </p>
                         </div>
                         <div class="weather-card__bottom__inner_wind">
                           Wind Speed
                           <p>
-                            {{formatWind}} km/hour
+                            {{formatWind}} <span>km/hour</span>
                           </p>
                         </div>
                         <div class="weather-card__bottom__inner_sunrise">
@@ -66,13 +67,13 @@
                           <div class="weather-card__bottom__inner_humidity">
                             Humidity
                             <p>
-                              {{formatHumidity}}%
+                              {{formatHumidity}} <span>%</span>
                             </p>
                           </div>
                           <div class="weather-card__bottom__inner_visibility">
                             Visibility
                             <p>
-                              {{formatVisibility}} km/hour
+                              {{formatVisibility}} <span>km/hour</span>
                             </p>
                           </div>
                         </div>
@@ -152,7 +153,7 @@ export default {
     },
     formatTime(){
       const date = this.getDate;
-      return date.getHours() + ':' + (Number(date.getMinutes()) > 10 ? date.getMinutes() : '0' + date.getMinutes())
+      return date.getHours() + ':' + (Number(date.getMinutes()) >= 10 ? date.getMinutes() : '0' + date.getMinutes())
     },
     formatTemperature(){
       return (+this.getMainForecast.temp - this.kelvinsConst).toFixed(0)
@@ -174,6 +175,10 @@ export default {
       margin: 0 auto!important;
   }
 
+  .weather-card__night{
+    background: -webkit-linear-gradient(-45deg, #595962, #32326d)!important;
+  }
+
   .weather-card__inner{
     position: relative;
     width: 100%;
@@ -182,6 +187,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    
+    background: -webkit-linear-gradient(-45deg, #85c5fa, #42A5F5);
 
     padding: 1.5rem 2.5rem;
 
@@ -226,15 +233,13 @@ export default {
       }
     }
 
-    &_profile__top{
+    &_profile__top{ 
       display: flex;
       column-gap: 1rem;
       padding-bottom: 13rem;
       align-items: center;
       border-radius: 8px;
       overflow: hidden;
-
-      // background-color: red;
 
       p{
         margin: 0 
@@ -244,11 +249,62 @@ export default {
     &_profile__bottom{
       padding: 1.5rem 0;
 
+      .weather-card__bottom__inner{
+        font-size: 2rem;
+
+        & > div{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          p{
+            margin: auto 0;
+            font-size: 5rem;
+          }
+
+          span{
+            font-size: 2rem;
+          }
+        }
+        
+        &_temperature{
+
+          p{
+            display: flex;
+            font-size: 10rem;
+          }
+        }
+
+        &_sunset, &_sunrise{
+
+          p{
+            font-size: 4rem!important;
+          }
+        }
+
+        &_extensions{
+          display: flex;
+          row-gap: 1rem;
+
+          & > div{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+          }
+          
+          p{
+            font-size: 2.5rem!important;
+          }
+        }
+      } 
+
       & > div{
         display: flex;
         justify-content: space-around;
       }
     }
+
+
   }
 
   // loader spinner
@@ -267,7 +323,7 @@ export default {
   // 'weather card loading' transition
 
   .weather-card__animation-enter-active, .weather-card__animation-leave-active {
-    transition: opacity .3s ease-in-out;
+    transition: opacity .5s ease-in-out;
   }
   .weather-card__animation-enter, .weather-card__animation-leave-to{
     opacity: 0;
